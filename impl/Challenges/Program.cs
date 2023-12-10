@@ -7,9 +7,10 @@ if (args.Length > 0 && args[0] == "all")
 }
 else
 {
-    ExecuteChallenge<Challenges.Day10.Part1>();
-    ExecuteChallenge<Challenges.Day10.Part2>();
+    ExecuteChallenge<Challenges.Day11.Part1>();
+    ExecuteChallenge<Challenges.Day11.Part2>();
 }
+return;
 
 static void ExecuteChallenge<TChallenge>()
     where TChallenge : AdventOfCodeChallenge, new()
@@ -50,4 +51,6 @@ static void ExecuteAll()
     ExecuteChallenge<Challenges.Day09.Part2>();
     ExecuteChallenge<Challenges.Day10.Part1>();
     ExecuteChallenge<Challenges.Day10.Part2>();
+    ExecuteChallenge<Challenges.Day11.Part1>();
+    ExecuteChallenge<Challenges.Day11.Part2>();
 }

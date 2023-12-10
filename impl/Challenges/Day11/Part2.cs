@@ -14,7 +14,7 @@ public class Part2 : AdventOfCodeChallenge
     public Part2()
         : base(11, 2, @"Day11\input.txt")
     {
-        SetupTest(Sample, 4);
+        SetupTest(Sample, 0);
     }
 
     protected override long Run(string input)
