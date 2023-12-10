@@ -1,0 +1,177 @@
+﻿using Challenges.Day10.Models;
+using Utility;
+
+namespace Challenges.Day10;
+
+/// <summary>
+/// 
+/// </summary>
+public class Part1 : AdventOfCodeChallenge
+{
+    private const string Sample = """
+                                  .....
+                                  .S-7.
+                                  .|.|.
+                                  .L-J.
+                                  .....
+                                  """;
+    private const string Sample2 = """
+                                   ..F7.
+                                   .FJ|.
+                                   SJ.L7
+                                   |F--J
+                                   LJ...
+                                   """;
+
+    public Part1()
+        : base(10, 1, @"Day10\input.txt")
+    {
+        SetupTest(Sample, 4);
+        SetupTest(Sample2, 8);
+
+        // Use correct answer for input as test. // TODO: be sure to remove when using different input
+        SetupTest(Input, 6909);
+    }
+
+    protected override long Run(string input)
+    {
+        var result = 0L;
+
+        var lines = input.Split('\n')
+            .Where((line) => !string.IsNullOrWhiteSpace(line))
+            .Select((line) => line.Replace("\r", ""))
+            .ToArray()
+            ;
+
+        var map = new Dictionary<Position, Direction>();
+        for (var y = 0; y < lines.Length; y++)
+        {
+            var line = lines[y];
+            for (var x = 0; x < line.Length; x++)
+            {
+                var node = line[x];
+                if (node != '.')
+                {
+                    var nodeConnections = node switch
+                    {
+                        '|' => Direction.North | Direction.South,
+                        '-' => Direction.East | Direction.West,
+                        'L' => Direction.North | Direction.East,
+                        'J' => Direction.North | Direction.West,
+                        '7' => Direction.South | Direction.West,
+                        'F' => Direction.East | Direction.South,
+                        'S' => Direction.Unknown,
+                        _ => throw new InvalidOperationException(),
+                    };
+
+                    map.Add((x, y), nodeConnections);
+                }
+            }
+        }
+
+        var startNode = map.Single((item) => item.Value == Direction.Unknown);
+        var (startX, startY) = startNode.Key;
+        var startingPoints = map
+            .Where((item) => 
+                (item.Key == (startX - 1, startY) && item.Value.HasFlag(Direction.East))
+                    || (item.Key == (startX + 1, startY) && item.Value.HasFlag(Direction.West))
+                    || (item.Key == (startX, startY - 1) && item.Value.HasFlag(Direction.South))
+                    || (item.Key == (startX, startY + 1) && item.Value.HasFlag(Direction.North))
+                )
+            .Select((item) =>
+            {
+                // Modify starting point with directions
+                var lateral = item.Key.X == startX - 1 ? Direction.West : Direction.East;
+                var longitudinal = item.Key.Y == startY - 1 ? Direction.North : Direction.South;
+                map[(startX, startY)] = lateral | longitudinal;
+                startNode = map.First((item) => item.Key == (startX, startY));
+
+                return item;
+            })
+            .ToArray()
+            ;
+        if (startingPoints.Length != 2)
+            throw new InvalidOperationException();
+
+        var currentStep1 = startingPoints[0];
+        var currentStep2 = startingPoints[1];
+        var sourceDirectionStep1 = currentStep1.Key switch
+        {
+            // If x is on the right of start (or previous) node, cross off going west when starting to move.
+            (int x, int y) when x == startNode.Key.X + 1 && y == startNode.Key.Y => Direction.West,
+            // Else, if x is on the left of start (or previous) node, don't go right.
+            (int x, int y) when x == startNode.Key.X - 1 && y == startNode.Key.Y => Direction.East,
+            // Same as before, don't go up when start (or previous) node was above
+            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y + 1 => Direction.North,
+            // And finally the same for down
+            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y - 1 => Direction.South,
+            _ => throw new InvalidOperationException(),
+        };
+        var sourceDirectionStep2 = currentStep2.Key switch
+        {
+            // Same thing as above for the second step.
+            (int x, int y) when x == startNode.Key.X + 1 && y == startNode.Key.Y => Direction.West,
+            (int x, int y) when x == startNode.Key.X - 1 && y == startNode.Key.Y => Direction.East,
+            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y + 1 => Direction.North,
+            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y - 1 => Direction.South,
+            _ => throw new InvalidOperationException(),
+        };
+        result = 1;
+        while (true)
+        {
+            var (targetX, targetY) = (
+                currentStep1.Value.HasFlag(Direction.West) && sourceDirectionStep1 != Direction.West ?
+                    currentStep1.Key.X - 1 :
+                    (currentStep1.Value.HasFlag(Direction.East) && sourceDirectionStep1 != Direction.East ? currentStep1.Key.X + 1 : currentStep1.Key.X),
+                currentStep1.Value.HasFlag(Direction.North) && sourceDirectionStep1 != Direction.North ?
+                    currentStep1.Key.Y - 1 :
+                    (currentStep1.Value.HasFlag(Direction.South) && sourceDirectionStep1 != Direction.South ? currentStep1.Key.Y + 1 : currentStep1.Key.Y)
+                );
+            // We could also negate currentStep1.Value but then we cannot use our shiny logic :)
+            sourceDirectionStep1 = (targetX, targetY) switch
+            {
+                (int x, int y) when x == currentStep1.Key.X + 1 && y == currentStep1.Key.Y => Direction.West,
+                (int x, int y) when x == currentStep1.Key.X - 1 && y == currentStep1.Key.Y => Direction.East,
+                (int x, int y) when x == currentStep1.Key.X && y == currentStep1.Key.Y + 1 => Direction.North,
+                (int x, int y) when x == currentStep1.Key.X && y == currentStep1.Key.Y - 1 => Direction.South,
+                _ => throw new InvalidOperationException(),
+            };
+            currentStep1 = new KeyValuePair<Position, Direction>((targetX, targetY), map[(targetX, targetY)]);
+
+            (targetX, targetY) = (
+                currentStep2.Value.HasFlag(Direction.West) && sourceDirectionStep2 != Direction.West ?
+                    currentStep2.Key.X - 1 :
+                    (currentStep2.Value.HasFlag(Direction.East) && sourceDirectionStep2 != Direction.East ? currentStep2.Key.X + 1 : currentStep2.Key.X),
+                currentStep2.Value.HasFlag(Direction.North) && sourceDirectionStep2 != Direction.North ?
+                    currentStep2.Key.Y - 1 :
+                    (currentStep2.Value.HasFlag(Direction.South) && sourceDirectionStep2 != Direction.South ? currentStep2.Key.Y + 1 : currentStep2.Key.Y)
+                );
+            sourceDirectionStep2 = (targetX, targetY) switch
+            {
+                (int x, int y) when x == currentStep2.Key.X + 1 && y == currentStep2.Key.Y => Direction.West,
+                (int x, int y) when x == currentStep2.Key.X - 1 && y == currentStep2.Key.Y => Direction.East,
+                (int x, int y) when x == currentStep2.Key.X && y == currentStep2.Key.Y + 1 => Direction.North,
+                (int x, int y) when x == currentStep2.Key.X && y == currentStep2.Key.Y - 1 => Direction.South,
+                _ => throw new InvalidOperationException(),
+            };
+            currentStep2 = new KeyValuePair<Position, Direction>((targetX, targetY), map[(targetX, targetY)]);
+
+            result++;
+
+            if (currentStep1.Key == currentStep2.Key)
+                break;
+        }
+
+        return result;
+    }
+
+    [Flags]
+    public enum Direction
+    {
+        Unknown = 0,
+        North = 1 << 0,
+        East = 1 << 1,
+        South = 1 << 2,
+        West = 1 << 3,
+    }
+}
