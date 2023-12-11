@@ -1,5 +1,4 @@
 ﻿using Challenges.Day03.Models;
-using System.Text.RegularExpressions;
 using Utility;
 
 namespace Challenges.Day03;
@@ -11,8 +10,6 @@ public class Part1() : AdventOfCodeChallenge(3, 1, @"Day03\input.txt")
 {
     protected override long Run(string input)
     {
-        var result = 0L;
-
         var numbers = new List<Number>();
         var symbols = new List<Symbol>();
 
@@ -22,8 +19,8 @@ public class Part1() : AdventOfCodeChallenge(3, 1, @"Day03\input.txt")
         var lineCounter = 0;
         while (reader.ReadLine() is { } line)
         {
-            numbers.AddRange(numberPattern.Matches(line).OfType<Match>().Select((m) => new Number() { Value = Convert.ToInt32(m.Value), Position = new Position(m.Index, lineCounter) }));
-            symbols.AddRange(symbolPattern.Matches(line).OfType<Match>().Select((m) => new Symbol() { Position = new Position(m.Index, lineCounter) }));
+            numbers.AddRange(numberPattern.Matches(line).Select((m) => new Number() { Value = Convert.ToInt32(m.Value), Position = new Position(m.Index, lineCounter) }));
+            symbols.AddRange(symbolPattern.Matches(line).Select((m) => new Symbol() { Position = new Position(m.Index, lineCounter) }));
 
             lineCounter++;
         }
@@ -35,8 +32,6 @@ public class Part1() : AdventOfCodeChallenge(3, 1, @"Day03\input.txt")
                 number.IsValid = true;
         }
 
-        result = numbers.Where((number) => number.IsValid).Sum((number) => number.Value);
-
-        return result;
+        return numbers.Where((number) => number.IsValid).Sum((number) => number.Value);
     }
 }

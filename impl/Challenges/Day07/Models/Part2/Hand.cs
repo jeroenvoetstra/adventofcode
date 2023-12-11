@@ -52,8 +52,8 @@ public class Hand : IComparable<Hand>
 
     private void CalculateScore()
     {
-        var jokerCount = Cards.Count((card) => card.Type == CardType.Card_J);
-        var groups = Cards.Where((card) => card.Type != CardType.Card_J).GroupBy((card) => card.Type);
+        var jokerCount = Cards.Count((card) => card.Type == CardType.CardJ);
+        var groups = Cards.Where((card) => card.Type != CardType.CardJ).GroupBy((card) => card.Type);
 
         if (jokerCount >= 4 || (groups.Any((group) => group.Count() + jokerCount == 5))) Score = HandType.FiveOfAKind; // AAAAA
         else if (jokerCount == 3 || (groups.Count() == 2 && groups.Any((group) => group.Count() + jokerCount == 4))) Score = HandType.FourOfAKind; // AAAAB

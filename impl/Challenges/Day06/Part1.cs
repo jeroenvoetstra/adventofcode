@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Utility;
+﻿using Utility;
 
 namespace Challenges.Day06;
 
@@ -12,8 +11,8 @@ public class Part1() : AdventOfCodeChallenge(6, 1, @"Day06\input.txt")
     {
         var summaryPattern = RegularExpressions.SummaryPattern();
 
-        var times = summaryPattern.Match(input).Groups["time"].Captures.OfType<Capture>().Select((item) => Convert.ToInt32(item.Value)).ToArray();
-        var distances = summaryPattern.Match(input).Groups["distance"].Captures.OfType<Capture>().Select((item) => Convert.ToInt32(item.Value)).ToArray();
+        var times = summaryPattern.Match(input).Groups["time"].Captures.Select((item) => Convert.ToInt32(item.Value)).ToArray();
+        var distances = summaryPattern.Match(input).Groups["distance"].Captures.Select((item) => Convert.ToInt32(item.Value)).ToArray();
         if (times.Length != distances.Length)
             throw new Exception();
 
@@ -23,7 +22,7 @@ public class Part1() : AdventOfCodeChallenge(6, 1, @"Day06\input.txt")
         return (long)results.Aggregate(1.0d, (left, right) => left * right.Solution);
     }
 
-    double SolveDistanceOverTime(long maxTime, long minDistance)
+    private static double SolveDistanceOverTime(long maxTime, long minDistance)
     {
         // x^2 - [t]*x + [d] => (-b +/- sqrt(b^2 - 4ac)) / 2a
         var b = (double)-maxTime;
@@ -33,9 +32,9 @@ public class Part1() : AdventOfCodeChallenge(6, 1, @"Day06\input.txt")
         var max = Math.Floor((-b + Math.Sqrt(Math.Pow(b, 2) - (4 * c))) / 2);
 
         var result = max - min;
-        if (min * (maxTime - min) == minDistance)
+        if (Math.Abs(min * (maxTime - min) - minDistance) < double.Epsilon)
             result -= 1;
-        if (max * (maxTime - max) == minDistance)
+        if (Math.Abs(max * (maxTime - max) - minDistance) < double.Epsilon)
             result -= 1;
 
         return result + 1;

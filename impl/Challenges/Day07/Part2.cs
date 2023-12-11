@@ -1,5 +1,4 @@
 ﻿using Challenges.Day07.Models.Part2;
-using System.Text.RegularExpressions;
 using Utility;
 
 namespace Challenges.Day07;
@@ -21,12 +20,12 @@ public class Part2() : AdventOfCodeChallenge(7, 2, @"Day07\input.txt")
         while (reader.ReadLine() is { } line)
         {
             var match = handPattern.Match(line);
-            if (match.Success)
-            {
-                var hand = match.Groups["hand"].Value;
-                var bid = match.Groups["bid"].Value;
-                allHands.Add(new Hand(hand, Convert.ToInt32(bid)));
-            }
+            if (!match.Success)
+                continue;
+
+            var hand = match.Groups["hand"].Value;
+            var bid = match.Groups["bid"].Value;
+            allHands.Add(new Hand(hand, Convert.ToInt32(bid)));
         }
 
         allHands.Sort();

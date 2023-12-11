@@ -1,5 +1,4 @@
 ﻿using Challenges.Day03.Models;
-using System.Text.RegularExpressions;
 using Utility;
 
 namespace Challenges.Day03;
@@ -11,8 +10,6 @@ public class Part2() : AdventOfCodeChallenge(3, 2, @"Day03\input.txt")
 {
     protected override long Run(string input)
     {
-        var result = 0L;
-
         var numbers = new List<Number>();
         var symbols = new List<Symbol>();
 
@@ -31,19 +28,17 @@ public class Part2() : AdventOfCodeChallenge(3, 2, @"Day03\input.txt")
         foreach (var number in numbers)
         {
             var relevantSymbols = symbols.Where((symbol) => symbol.Position.Y >= (number.Position.Y - 1) && symbol.Position.Y <= (number.Position.Y + 1));
-            var adjacentSymbols = relevantSymbols.Where(number.IsInVicinity);
-            if (adjacentSymbols.Any())
+            var adjacentSymbols = relevantSymbols.Where(number.IsInVicinity).ToList();
+            if (adjacentSymbols.Count == 0)
+                continue;
+
+            number.IsValid = true;
+            foreach (var symbol in adjacentSymbols)
             {
-                number.IsValid = true;
-                foreach (var symbol in adjacentSymbols)
-                {
-                    symbol.AttachedNumbers.Add(number);
-                }
+                symbol.AttachedNumbers.Add(number);
             }
         }
 
-        result =  symbols.Where((symbol) => symbol.IsGear && symbol.AttachedNumbers.Count == 2).Sum((symbol) => symbol.AttachedNumbers[0].Value * symbol.AttachedNumbers[1].Value);
-
-        return result;
+        return symbols.Where((symbol) => symbol.IsGear && symbol.AttachedNumbers.Count == 2).Sum((symbol) => symbol.AttachedNumbers[0].Value * symbol.AttachedNumbers[1].Value);
     }
 }

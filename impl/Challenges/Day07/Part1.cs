@@ -18,16 +18,15 @@ public class Part1() : AdventOfCodeChallenge(7, 1, @"Day07\input.txt")
         var allHands = new List<Hand>();
 
         using var reader = new StringReader(input);
-        string? line;
-        while ((line = reader.ReadLine()) != null)
+        while (reader.ReadLine() is { } line)
         {
             var match = handPattern.Match(line);
-            if (match.Success)
-            {
-                var hand = match.Groups["hand"].Value;
-                var bid = match.Groups["bid"].Value;
-                allHands.Add(new Hand(hand, Convert.ToInt32(bid)));
-            }
+            if (!match.Success) 
+                continue;
+            
+            var hand = match.Groups["hand"].Value;
+            var bid = match.Groups["bid"].Value;
+            allHands.Add(new Hand(hand, Convert.ToInt32(bid)));
         }
 
         allHands.Sort();

@@ -50,8 +50,10 @@ public class Part2() : AdventOfCodeChallenge(10, 2, @"Day10\input.txt")
         // inside to outside and the other way around. Implementation of the non-zero rule,
         // see https://en.wikipedia.org/wiki/Nonzero-rule. Only counting nodes pointing north
         // should also work.
-        char[] switchPoints =
-            map[mainLoop.First()].HasFlag(Direction.South) ? ['S', 'F', '7', '|'] : ['F', '7', '|'];
+        var switchPoints = map[mainLoop.First()].HasFlag(Direction.South) ?
+            new[] { 'S', 'F', '7', '|' } :
+            new[] { 'F', '7', '|' }
+            ;
         for (var y = 0; y < lines.Length; y++)
         {
             var inside = false;
@@ -87,7 +89,7 @@ public class Part2() : AdventOfCodeChallenge(10, 2, @"Day10\input.txt")
                 var lateral = item.Key.X == startX - 1 ? Direction.West : Direction.East;
                 var longitudinal = item.Key.Y == startY - 1 ? Direction.North : Direction.South;
                 map[(startX, startY)] = lateral | longitudinal;
-                startNode = map.First((item) => item.Key == (startX, startY));
+                startNode = map.First((mapItem) => mapItem.Key == (startX, startY));
 
                 return item;
             })
@@ -103,22 +105,22 @@ public class Part2() : AdventOfCodeChallenge(10, 2, @"Day10\input.txt")
         var sourceDirectionStep1 = currentStep1.Key switch
         {
             // If x is on the right of start (or previous) node, cross off going west when starting to move.
-            (int x, int y) when x == startNode.Key.X + 1 && y == startNode.Key.Y => Direction.West,
+            var (x, y) when x == startNode.Key.X + 1 && y == startNode.Key.Y => Direction.West,
             // Else, if x is on the left of start (or previous) node, don't go right.
-            (int x, int y) when x == startNode.Key.X - 1 && y == startNode.Key.Y => Direction.East,
+            var (x, y) when x == startNode.Key.X - 1 && y == startNode.Key.Y => Direction.East,
             // Same as before, don't go up when start (or previous) node was above
-            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y + 1 => Direction.North,
+            var (x, y) when x == startNode.Key.X && y == startNode.Key.Y + 1 => Direction.North,
             // And finally the same for down
-            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y - 1 => Direction.South,
+            var (x, y) when x == startNode.Key.X && y == startNode.Key.Y - 1 => Direction.South,
             _ => throw new InvalidOperationException(),
         };
         var sourceDirectionStep2 = currentStep2.Key switch
         {
             // Same thing as above for the second step.
-            (int x, int y) when x == startNode.Key.X + 1 && y == startNode.Key.Y => Direction.West,
-            (int x, int y) when x == startNode.Key.X - 1 && y == startNode.Key.Y => Direction.East,
-            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y + 1 => Direction.North,
-            (int x, int y) when x == startNode.Key.X && y == startNode.Key.Y - 1 => Direction.South,
+            var (x, y) when x == startNode.Key.X + 1 && y == startNode.Key.Y => Direction.West,
+            var (x, y) when x == startNode.Key.X - 1 && y == startNode.Key.Y => Direction.East,
+            var (x, y) when x == startNode.Key.X && y == startNode.Key.Y + 1 => Direction.North,
+            var (x, y) when x == startNode.Key.X && y == startNode.Key.Y - 1 => Direction.South,
             _ => throw new InvalidOperationException(),
         };
 
@@ -135,10 +137,10 @@ public class Part2() : AdventOfCodeChallenge(10, 2, @"Day10\input.txt")
             // We could also negate currentStep1.Value but then we cannot use our shiny logic :)
             sourceDirectionStep1 = (targetX, targetY) switch
             {
-                (int x, int y) when x == currentStep1.Key.X + 1 && y == currentStep1.Key.Y => Direction.West,
-                (int x, int y) when x == currentStep1.Key.X - 1 && y == currentStep1.Key.Y => Direction.East,
-                (int x, int y) when x == currentStep1.Key.X && y == currentStep1.Key.Y + 1 => Direction.North,
-                (int x, int y) when x == currentStep1.Key.X && y == currentStep1.Key.Y - 1 => Direction.South,
+                var (x, y) when x == currentStep1.Key.X + 1 && y == currentStep1.Key.Y => Direction.West,
+                var (x, y) when x == currentStep1.Key.X - 1 && y == currentStep1.Key.Y => Direction.East,
+                var (x, y) when x == currentStep1.Key.X && y == currentStep1.Key.Y + 1 => Direction.North,
+                var (x, y) when x == currentStep1.Key.X && y == currentStep1.Key.Y - 1 => Direction.South,
                 _ => throw new InvalidOperationException(),
             };
             currentStep1 = new KeyValuePair<Position, Direction>((targetX, targetY), map[(targetX, targetY)]);
@@ -154,10 +156,10 @@ public class Part2() : AdventOfCodeChallenge(10, 2, @"Day10\input.txt")
                 );
             sourceDirectionStep2 = (targetX, targetY) switch
             {
-                (int x, int y) when x == currentStep2.Key.X + 1 && y == currentStep2.Key.Y => Direction.West,
-                (int x, int y) when x == currentStep2.Key.X - 1 && y == currentStep2.Key.Y => Direction.East,
-                (int x, int y) when x == currentStep2.Key.X && y == currentStep2.Key.Y + 1 => Direction.North,
-                (int x, int y) when x == currentStep2.Key.X && y == currentStep2.Key.Y - 1 => Direction.South,
+                var (x, y) when x == currentStep2.Key.X + 1 && y == currentStep2.Key.Y => Direction.West,
+                var (x, y) when x == currentStep2.Key.X - 1 && y == currentStep2.Key.Y => Direction.East,
+                var (x, y) when x == currentStep2.Key.X && y == currentStep2.Key.Y + 1 => Direction.North,
+                var (x, y) when x == currentStep2.Key.X && y == currentStep2.Key.Y - 1 => Direction.South,
                 _ => throw new InvalidOperationException(),
             };
             currentStep2 = new KeyValuePair<Position, Direction>((targetX, targetY), map[(targetX, targetY)]);

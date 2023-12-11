@@ -11,9 +11,7 @@ public class Part1() : AdventOfCodeChallenge(5, 1, @"Day05\input.txt")
 {
     protected override long Run(string input)
     {
-        var result = 0L;
-
-        var seedsPattern = new Regex(@"(?<seeds>seeds: (?<seedNumbers>(?<seedNumberItem>(\d+)\s?)+))", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Multiline);
+        var seedsPattern = RegularExpressions.SeedsPattern();
         var seeds = seedsPattern.Match(input) is { } match ? ProcessSeeds(match) : throw new Exception();
         var seedToSoilMapping = GetMapping("seed-to-soil", input);
         var soilToFertilizerMapping = GetMapping("soil-to-fertilizer", input);
@@ -36,12 +34,11 @@ public class Part1() : AdventOfCodeChallenge(5, 1, @"Day05\input.txt")
             return location;
         });
 
-        result = locations.Min();
-
-        return result;
+        return locations.Min();
     }
 
-    private static long[] ProcessSeeds(Match match) => match.Groups["seedNumberItem"].Captures.OfType<Capture>().Select((capture) => Convert.ToInt64(capture.Value)).ToArray();
+    private static long[] ProcessSeeds(Match match) => match.Groups["seedNumberItem"].Captures.Select((capture) => Convert.ToInt64(capture.Value)).ToArray();
+    
     private static IEnumerable<Mapping> GetMapping(string name, string input)
     {
         var mappingPattern = new Regex($@"{name} map:[\s\r\n](?<mappings>[\d\s]+)[\r\n][\r\n]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Multiline);
@@ -49,14 +46,13 @@ public class Part1() : AdventOfCodeChallenge(5, 1, @"Day05\input.txt")
         if (!match.Success)
             throw new Exception();
 
-        var results = new List<Mapping>();
-
         var mappings = match.Groups["mappings"].Value;
         using var reader = new StringReader(mappings);
         while (reader.ReadLine() is { } line)
         {
             if (string.IsNullOrWhiteSpace(line))
                 continue;
+            
             yield return new Mapping(line.Split(' ').Select((item) => Convert.ToInt64(item.Trim())).ToArray());
         }
     }

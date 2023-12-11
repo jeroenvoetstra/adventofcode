@@ -1,5 +1,4 @@
-﻿using Challenges.Day08.Models;
-using Utility;
+﻿using Utility;
 
 namespace Challenges.Day09;
 
@@ -29,7 +28,7 @@ public class Part1() : AdventOfCodeChallenge(8, 1, @"Day09\input.txt")
                     );
                 lastItem = tracker.Last();
             }
-            while (!lastItem.All((item) => item == 0));
+            while (lastItem.Any(item => item != 0));
 
             for (var i = tracker.Count - 1; i > 0; i--)
             {

@@ -28,7 +28,7 @@ public class Part2() : AdventOfCodeChallenge(9, 2, @"Day09\input.txt")
                     );
                 lastItem = tracker.Last();
             }
-            while (!lastItem.All((item) => item == 0));
+            while (lastItem.Any(item => item != 0));
 
             for (var i = tracker.Count - 1; i > 0; i--)
             {

@@ -52,14 +52,14 @@ public class Hand : IComparable<Hand>
 
     private void CalculateScore()
     {
-        var groups = Cards.GroupBy((card) => card.Type);
-        if (groups.Count() == 1) Score = HandType.FiveOfAKind; // AAAAA
-        else if (groups.Count() == 2 && groups.Any((group) => group.Count() == 4)) Score = HandType.FourOfAKind; // AAAAB
-        else if (groups.Count() == 2) Score = HandType.FullHouse; // AAABB
+        var groups = Cards.GroupBy((card) => card.Type).ToList();
+        if (groups.Count == 1) Score = HandType.FiveOfAKind; // AAAAA
+        else if (groups.Count == 2 && groups.Any((group) => group.Count() == 4)) Score = HandType.FourOfAKind; // AAAAB
+        else if (groups.Count == 2) Score = HandType.FullHouse; // AAABB
         else if (groups.Any((group) => group.Count() == 3)) Score = HandType.ThreeOfAKind; // AAABC
-        else if (groups.Count() == 3 && groups.Count((group) => group.Count() == 2) == 2) Score = HandType.TwoPair; // AABBC
-        else if (groups.Count() == 4 && groups.Count((group) => group.Count() == 2) == 1) Score = HandType.OnePair; // AABCD
-        else if (groups.Count() == 5) Score = HandType.HighCard; // ABCDE
+        else if (groups.Count == 3 && groups.Count((group) => group.Count() == 2) == 2) Score = HandType.TwoPair; // AABBC
+        else if (groups.Count == 4 && groups.Count((group) => group.Count() == 2) == 1) Score = HandType.OnePair; // AABCD
+        else if (groups.Count == 5) Score = HandType.HighCard; // ABCDE
         else throw new InvalidOperationException();
     }
 }

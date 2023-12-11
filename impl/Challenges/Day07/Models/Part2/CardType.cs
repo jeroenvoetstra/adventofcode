@@ -1,18 +1,18 @@
-﻿namespace Challenges.Day07.Models;
+﻿namespace Challenges.Day07.Models.Part2;
 
 public enum CardType
 {
-    Card_A = 13,
-    Card_K = 12,
-    Card_Q = 11,
-    Card_T = 10,
-    Card_9 = 9,
-    Card_8 = 8,
-    Card_7 = 7,
-    Card_6 = 6,
-    Card_5 = 5,
-    Card_4 = 4,
-    Card_3 = 3,
-    Card_2 = 2,
-    Card_J = 1,
+    CardA = 13,
+    CardK = 12,
+    CardQ = 11,
+    CardT = 10,
+    Card9 = 9,
+    Card8 = 8,
+    Card7 = 7,
+    Card6 = 6,
+    Card5 = 5,
+    Card4 = 4,
+    Card3 = 3,
+    Card2 = 2,
+    CardJ = 1,
 }

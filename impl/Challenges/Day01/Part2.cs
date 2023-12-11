@@ -51,7 +51,7 @@ public class Part2() : AdventOfCodeChallenge(1, 2, @"Day01\input.txt")
         return result;
     }
 
-    bool TryGetNumberFromWord(string? word, out int result) => word?.ToLower() switch
+    private static bool TryGetNumberFromWord(string? word, out int result) => word?.ToLower() switch
     {
         // ReSharper disable ConditionIsAlwaysTrueOrFalse
         "one" => (result = 1) == 1,

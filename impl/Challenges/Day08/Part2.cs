@@ -5,24 +5,8 @@ namespace Challenges.Day08;
 
 public class Part2() : AdventOfCodeChallenge(8, 2, @"Day08\input.txt")
 {
-    private const string Sample = """
-        LR
-
-        11A = (11B, XXX)
-        11B = (XXX, 11Z)
-        11Z = (11B, XXX)
-        22A = (22B, XXX)
-        22B = (22C, 22C)
-        22C = (22Z, 22Z)
-        22Z = (22B, 22B)
-        XXX = (XXX, XXX)
-        """; // 6
-    // 12315788159977
-
     protected override long Run(string input)
     {
-        var result = 0L;
-
         var lines = input.Split('\n')
             .Where((line) => !string.IsNullOrWhiteSpace(line))
             .Select((line) => line.Replace("\r", ""))
@@ -65,10 +49,10 @@ public class Part2() : AdventOfCodeChallenge(8, 2, @"Day08\input.txt")
             var nodeResult = 0L;
             for (var i = 0; i < instructions.Length; i++)
             {
-                var next = instructions[i] switch
+                currentNode = instructions[i] switch
                 {
-                    'L' => currentNode = currentNode!.LeftDescendant,
-                    'R' => currentNode = currentNode!.RightDescendant,
+                    'L' => currentNode.LeftDescendant,
+                    'R' => currentNode.RightDescendant,
                     _ => throw new InvalidOperationException(),
                 };
                 nodeResult++;
@@ -76,10 +60,10 @@ public class Part2() : AdventOfCodeChallenge(8, 2, @"Day08\input.txt")
                 if (currentNode!.Identifier.EndsWith('Z'))
                 {
                     // If the end node is already present, we are starting to loop, so use previous result and break out of processing.
-                    if (lcmStore.ContainsKey(currentNode!.Identifier))
+                    if (lcmStore.ContainsKey(currentNode.Identifier))
                         break;
-                    else
-                        lcmStore[currentNode!.Identifier] = nodeResult;
+
+                    lcmStore[currentNode.Identifier] = nodeResult;
                 }
 
                 // Restart the instructions loop, we'll break out of it when we found what we're looking for.
@@ -88,17 +72,15 @@ public class Part2() : AdventOfCodeChallenge(8, 2, @"Day08\input.txt")
             }
         }
 
-        result = LeastCommonMultiple(lcmStore.Values.AsEnumerable());
-
-        return result;
+        return LeastCommonMultiple(lcmStore.Values.AsEnumerable());
     }
 
-    static long LeastCommonMultiple(IEnumerable<long> input)
+    private static long LeastCommonMultiple(IEnumerable<long> input)
     {
         return input.Aggregate((aggregator, value) => aggregator * value / GreatestCommonDivisor(aggregator, value));
     }
 
-    static long GreatestCommonDivisor(long input1, long input2)
+    private static long GreatestCommonDivisor(long input1, long input2)
     {
         return input2 == 0 ? input1 : GreatestCommonDivisor(input2, input1 % input2);
     }
