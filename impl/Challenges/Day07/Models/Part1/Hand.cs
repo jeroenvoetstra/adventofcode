@@ -9,13 +9,14 @@ public class Hand : IComparable<Hand>
     public Hand(string cards, int bid)
     {
         if (cards.Length != 5)
-            throw new ArgumentException(nameof(cards));
+            throw new ArgumentException("Invalid card count", nameof(cards));
 
         var list = new List<Card>();
         foreach (var c in cards)
         {
-            if (!Enum.TryParse<CardType>($"Card_{c}", out var type))
-                throw new ArgumentException(nameof(cards));
+            if (!Enum.TryParse<CardType>($"Card{c}", out var type))
+                throw new ArgumentException("Invalid card", nameof(cards));
+
             list.Add(new Card(type));
         }
 
@@ -24,7 +25,7 @@ public class Hand : IComparable<Hand>
         CalculateScore();
     }
 
-    public override string ToString() => string.Join("", Cards.Select((c) => c.Type.ToString().Replace("Card_", "")));
+    public override string ToString() => string.Join("", Cards.Select((c) => c.Type.ToString().Replace("Card", "")));
     public override int GetHashCode() => Cards.Aggregate(1, (left, right) => left ^ right.GetHashCode());
     public override bool Equals(object? other) => other is Hand hand && ToString() == hand.ToString();
 
