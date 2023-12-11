@@ -3,37 +3,8 @@ using Utility;
 
 namespace Challenges.Day08;
 
-public class Part1 : AdventOfCodeChallenge
+public class Part1() : AdventOfCodeChallenge(8, 1, @"Day08\input.txt")
 {
-    private const string Sample = """
-        RL
-
-        AAA = (BBB, CCC)
-        BBB = (DDD, EEE)
-        CCC = (ZZZ, GGG)
-        DDD = (DDD, DDD)
-        EEE = (EEE, EEE)
-        GGG = (GGG, GGG)
-        ZZZ = (ZZZ, ZZZ)
-        """;
-    private const string Sample2 = """
-        LLR
-
-        AAA = (BBB, BBB)
-        BBB = (AAA, ZZZ)
-        ZZZ = (ZZZ, ZZZ)
-        """;
-
-    public Part1()
-        : base(8, 1, @"Day08\input.txt")
-    {
-        SetupTest(Sample, 2);
-        SetupTest(Sample2, 6);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 18113);
-    }
-
     protected override long Run(string input)
     {
         var result = 0;

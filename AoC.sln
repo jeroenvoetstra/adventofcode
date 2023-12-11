@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Challenges", "impl\Challeng
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "impl\Utility\Utility.csproj", "{D0E2DBE5-D025-4A05-B095-35DE8B62B814}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenges.Tests", "tests\Challenges.Tests\Challenges.Tests.csproj", "{1300835D-ABDF-4DDA-8F39-5155BB1FEE13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D0E2DBE5-D025-4A05-B095-35DE8B62B814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0E2DBE5-D025-4A05-B095-35DE8B62B814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0E2DBE5-D025-4A05-B095-35DE8B62B814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1300835D-ABDF-4DDA-8F39-5155BB1FEE13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1300835D-ABDF-4DDA-8F39-5155BB1FEE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1300835D-ABDF-4DDA-8F39-5155BB1FEE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1300835D-ABDF-4DDA-8F39-5155BB1FEE13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

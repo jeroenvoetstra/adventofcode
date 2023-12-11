@@ -2,10 +2,10 @@
 
 public class Game
 {
-    public string Raw { get; set; }
+    public string Raw { get; set; } = null!;
 
     public int Number { get; set; }
-    public IEnumerable<Turn> Turns { get; set; }
+    public IEnumerable<Turn> Turns { get; set; } = null!;
 
     public Dictionary<string, int> Summary => Turns.SelectMany((item) => item.Items).GroupBy((item) => item.Color).ToDictionary((item) => item.Key, (item) => item.Sum((subItem) => subItem.Number));
 

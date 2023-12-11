@@ -7,30 +7,8 @@ namespace Challenges.Day03;
 /// <summary>
 /// 
 /// </summary>
-public class Part2 : AdventOfCodeChallenge
+public class Part2() : AdventOfCodeChallenge(3, 2, @"Day03\input.txt")
 {
-    private const string Sample = """
-                                  467..114..
-                                  ...*......
-                                  ..35..633.
-                                  ......#...
-                                  617*......
-                                  .....+.58.
-                                  ..592.....
-                                  ......755.
-                                  ...$.*....
-                                  .664.598..
-                                  """;
-
-    public Part2()
-        : base(3, 2, @"Day03\input.txt")
-    {
-        SetupTest(Sample, 467835);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 84907174);
-    }
-
     protected override long Run(string input)
     {
         var result = 0L;
@@ -44,8 +22,8 @@ public class Part2 : AdventOfCodeChallenge
         var lineCounter = 0;
         while (reader.ReadLine() is { } line)
         {
-            numbers.AddRange(numberPattern.Matches(line).OfType<Match>().Select((m) => new Number() { Value = Convert.ToInt32(m.Value), Position = new Position(m.Index, lineCounter) }));
-            symbols.AddRange(symbolPattern.Matches(line).OfType<Match>().Select((m) => new Symbol() { Position = new Position(m.Index, lineCounter), IsGear = m.Value == "*" }));
+            numbers.AddRange(numberPattern.Matches(line).Select((m) => new Number() { Value = Convert.ToInt32(m.Value), Position = new Position(m.Index, lineCounter) }));
+            symbols.AddRange(symbolPattern.Matches(line).Select((m) => new Symbol() { Position = new Position(m.Index, lineCounter), IsGear = m.Value == "*" }));
 
             lineCounter++;
         }

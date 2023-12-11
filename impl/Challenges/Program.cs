@@ -1,5 +1,4 @@
 ﻿using Utility;
-using Utility.Exceptions;
 
 if (args.Length > 0 && args[0] == "all")
 {
@@ -16,17 +15,9 @@ static void ExecuteChallenge<TChallenge>()
     where TChallenge : AdventOfCodeChallenge, new()
 {
     var challenge = new TChallenge();
-    try
-    {
-        Console.WriteLine($"Executing challenge with type {typeof(TChallenge)}");
-        challenge.ExecuteTests();
-        Console.WriteLine();
-        challenge.Execute();
-        Console.WriteLine();
-        Console.WriteLine();
-    }
-    catch (AoCTestFailedException)
-    { }
+    challenge.Execute();
+    Console.WriteLine();
+    Console.WriteLine();
 }
 
 static void ExecuteAll()

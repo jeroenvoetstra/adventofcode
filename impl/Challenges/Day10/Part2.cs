@@ -1,61 +1,13 @@
 ﻿using Challenges.Day10.Models;
 using Utility;
-using static Challenges.Day10.Part1;
 
 namespace Challenges.Day10;
 
 /// <summary>
 /// 
 /// </summary>
-public class Part2 : AdventOfCodeChallenge
+public class Part2() : AdventOfCodeChallenge(10, 2, @"Day10\input.txt")
 {
-    private const string Sample = """
-                                  ...........
-                                  .S-------7.
-                                  .|F-----7|.
-                                  .||.....||.
-                                  .||.....||.
-                                  .|L-7.F-J|.
-                                  .|..|.|..|.
-                                  .L--J.L--J.
-                                  ...........
-                                  """;
-    private const string Sample2 = """
-                                   .F----7F7F7F7F-7....
-                                   .|F--7||||||||FJ....
-                                   .||.FJ||||||||L7....
-                                   FJL7L7LJLJ||LJ.L-7..
-                                   L--J.L7...LJS7F-7L7.
-                                   ....F-J..F7FJ|L7L7L7
-                                   ....L7.F7||L7|.L7L7|
-                                   .....|FJLJ|FJ|F7|.LJ
-                                   ....FJL-7.||.||||...
-                                   ....L---J.LJ.LJLJ...
-                                   """;
-    private const string Sample3 = """
-                                   FF7FSF7F7F7F7F7F---7
-                                   L|LJ||||||||||||F--J
-                                   FL-7LJLJ||||||LJL-77
-                                   F--JF--7||LJLJ7F7FJ-
-                                   L---JF-JLJ.||-FJLJJ7
-                                   |F|F-JF---7F7-L7L|7|
-                                   |FFJF7L7F-JF7|JL---7
-                                   7-L-JL7||F7|L7F-7F7|
-                                   L.L7LFJ|||||FJL7||LJ
-                                   L7JLJL-JLJLJL--JLJ.L
-                                   """;
-
-    public Part2()
-        : base(10, 2, @"Day10\input.txt")
-    {
-        SetupTest(Sample, 4);
-        SetupTest(Sample2, 8);
-        SetupTest(Sample3, 10);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 461);
-    }
-
     protected override long Run(string input)
     {
         var result = 0L;

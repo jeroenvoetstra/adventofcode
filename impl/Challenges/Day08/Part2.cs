@@ -1,11 +1,9 @@
 ﻿using Challenges.Day08.Models;
-using System.Collections.Concurrent;
-using System.ComponentModel.DataAnnotations;
 using Utility;
 
 namespace Challenges.Day08;
 
-public class Part2 : AdventOfCodeChallenge
+public class Part2() : AdventOfCodeChallenge(8, 2, @"Day08\input.txt")
 {
     private const string Sample = """
         LR
@@ -18,16 +16,8 @@ public class Part2 : AdventOfCodeChallenge
         22C = (22Z, 22Z)
         22Z = (22B, 22B)
         XXX = (XXX, XXX)
-        """;
-
-    public Part2()
-        : base(8, 2, @"Day08\input.txt")
-    {
-        SetupTest(Sample, 6);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 12315788159977);
-    }
+        """; // 6
+    // 12315788159977
 
     protected override long Run(string input)
     {
@@ -55,12 +45,9 @@ public class Part2 : AdventOfCodeChallenge
             var left = match.Groups["left"].Value;
             var right = match.Groups["right"].Value;
 
-            if (!buffer.ContainsKey(id))
-                buffer.Add(id, (Node)id);
-            if (!buffer.ContainsKey(left))
-                buffer.Add(left, (Node)left);
-            if (!buffer.ContainsKey(right))
-                buffer.Add(right, (Node)right);
+            buffer.TryAdd(id, id);
+            buffer.TryAdd(left, left);
+            buffer.TryAdd(right, right);
 
             buffer[id].LeftDescendant = buffer[left];
             buffer[id].RightDescendant = buffer[right];

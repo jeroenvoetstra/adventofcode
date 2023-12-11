@@ -3,23 +3,8 @@ using Utility;
 
 namespace Challenges.Day09;
 
-public class Part1 : AdventOfCodeChallenge
+public class Part1() : AdventOfCodeChallenge(8, 1, @"Day09\input.txt")
 {
-    private const string Sample = """
-        0 3 6 9 12 15
-        1 3 6 10 15 21
-        10 13 16 21 30 45
-        """;
-
-    public Part1()
-        : base(8, 1, @"Day09\input.txt")
-    {
-        SetupTest(Sample, 114);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 1666172641);
-    }
-
     protected override long Run(string input)
     {
         var result = 0L;

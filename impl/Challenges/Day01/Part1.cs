@@ -6,24 +6,8 @@ namespace Challenges.Day01;
 /// Nothing too difficult, just using a '\d' regular expression
 /// and getting the first and the last match.
 /// </summary>
-public class Part1 : AdventOfCodeChallenge
+public class Part1() : AdventOfCodeChallenge(1, 1, @"Day01\input.txt")
 {
-    private const string Sample = """
-                                  1abc2
-                                  pqr3stu8vwx
-                                  a1b2c3d4e5f
-                                  treb7uchet
-                                  """;
-
-    public Part1()
-        : base(1, 1, @"Day01\input.txt")
-    {
-        SetupTest(Sample, 142);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 53080);
-    }
-
     protected override long Run(string input)
     {
         var result = 0;

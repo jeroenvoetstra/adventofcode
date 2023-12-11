@@ -6,22 +6,8 @@ namespace Challenges.Day06;
 /// <summary>
 /// 
 /// </summary>
-public class Part2 : AdventOfCodeChallenge
+public class Part2() : AdventOfCodeChallenge(6, 2, @"Day06\input.txt")
 {
-    private const string Sample = """
-                                  Time:      7  15   30
-                                  Distance:  9  40  200
-                                  """;
-
-    public Part2()
-        : base(6, 2, @"Day06\input.txt")
-    {
-        SetupTest(Sample, 71503);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 27340847);
-    }
-
     protected override long Run(string input)
     {
         var summaryPattern = RegularExpressions.SummaryPattern();

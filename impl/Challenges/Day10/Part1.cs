@@ -6,33 +6,8 @@ namespace Challenges.Day10;
 /// <summary>
 /// 
 /// </summary>
-public class Part1 : AdventOfCodeChallenge
+public class Part1() : AdventOfCodeChallenge(10, 1, @"Day10\input.txt")
 {
-    private const string Sample = """
-                                  .....
-                                  .S-7.
-                                  .|.|.
-                                  .L-J.
-                                  .....
-                                  """;
-    private const string Sample2 = """
-                                   ..F7.
-                                   .FJ|.
-                                   SJ.L7
-                                   |F--J
-                                   LJ...
-                                   """;
-
-    public Part1()
-        : base(10, 1, @"Day10\input.txt")
-    {
-        SetupTest(Sample, 4);
-        SetupTest(Sample2, 8);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 6909);
-    }
-
     protected override long Run(string input)
     {
         var result = 0L;
@@ -163,15 +138,5 @@ public class Part1 : AdventOfCodeChallenge
         }
 
         return result;
-    }
-
-    [Flags]
-    public enum Direction
-    {
-        Unknown = 0,
-        North = 1 << 0,
-        East = 1 << 1,
-        South = 1 << 2,
-        West = 1 << 3,
     }
 }

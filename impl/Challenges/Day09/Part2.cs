@@ -2,23 +2,8 @@
 
 namespace Challenges.Day09;
 
-public class Part2 : AdventOfCodeChallenge
+public class Part2() : AdventOfCodeChallenge(9, 2, @"Day09\input.txt")
 {
-    private const string Sample = """
-        0 3 6 9 12 15
-        1 3 6 10 15 21
-        10 13 16 21 30 45
-        """;
-
-    public Part2()
-        : base(9, 2, @"Day09\input.txt")
-    {
-        SetupTest(Sample, 2);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 933);
-    }
-
     protected override long Run(string input)
     {
         var result = 0L;

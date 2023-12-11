@@ -7,59 +7,14 @@ namespace Challenges.Day05;
 /// <summary>
 /// 
 /// </summary>
-public class Part1 : AdventOfCodeChallenge
+public class Part1() : AdventOfCodeChallenge(5, 1, @"Day05\input.txt")
 {
-    private const string Sample = """
-                                  seeds: 79 14 55 13
-
-                                  seed-to-soil map:
-                                  50 98 2
-                                  52 50 48
-
-                                  soil-to-fertilizer map:
-                                  0 15 37
-                                  37 52 2
-                                  39 0 15
-
-                                  fertilizer-to-water map:
-                                  49 53 8
-                                  0 11 42
-                                  42 0 7
-                                  57 7 4
-
-                                  water-to-light map:
-                                  88 18 7
-                                  18 25 70
-
-                                  light-to-temperature map:
-                                  45 77 23
-                                  81 45 19
-                                  68 64 13
-
-                                  temperature-to-humidity map:
-                                  0 69 1
-                                  1 0 69
-
-                                  humidity-to-location map:
-                                  60 56 37
-                                  56 93 4
-                                  """;
-
-    public Part1()
-        : base(5, 1, @"Day05\input.txt")
-    {
-        SetupTest(Sample, 35);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 388071289);
-    }
-
     protected override long Run(string input)
     {
         var result = 0L;
 
         var seedsPattern = new Regex(@"(?<seeds>seeds: (?<seedNumbers>(?<seedNumberItem>(\d+)\s?)+))", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Multiline);
-        var seeds = seedsPattern.Match(input) is Match match ? ProcessSeeds(match) : throw new Exception();
+        var seeds = seedsPattern.Match(input) is { } match ? ProcessSeeds(match) : throw new Exception();
         var seedToSoilMapping = GetMapping("seed-to-soil", input);
         var soilToFertilizerMapping = GetMapping("soil-to-fertilizer", input);
         var fertilizerToWaterMapping = GetMapping("fertilizer-to-water", input);

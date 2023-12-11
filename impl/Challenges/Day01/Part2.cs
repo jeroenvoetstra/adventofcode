@@ -11,27 +11,8 @@ namespace Challenges.Day01;
 /// but for the sake of simplicity, why not have a reverse
 /// one to get the first match from the reversed input?
 /// </summary>
-public class Part2 : AdventOfCodeChallenge
+public class Part2() : AdventOfCodeChallenge(1, 2, @"Day01\input.txt")
 {
-    private const string Sample = """
-                                  two1nine
-                                  eightwothree
-                                  abcone2threexyz
-                                  xtwone3four
-                                  4nineeightseven2
-                                  zoneight234
-                                  7pqrstsixteen
-                                  """;
-
-    public Part2()
-        : base(1, 2, @"Day01\input.txt")
-    {
-        SetupTest(Sample, 281);
-
-        // Use correct answer for input as test. // TODO: be sure to remove when using different input
-        SetupTest(Input, 53268);
-    }
-
     protected override long Run(string input)
     {
         var result = 0;
