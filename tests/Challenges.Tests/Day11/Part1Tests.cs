@@ -5,12 +5,21 @@ namespace Challenges.Tests.Day11;
 public class Part1Tests
 {
     private const string Sample = """
-                                  
+                                  ...#......
+                                  .......#..
+                                  #.........
+                                  ..........
+                                  ......#...
+                                  .#........
+                                  .........#
+                                  ..........
+                                  .......#..
+                                  #...#.....
                                   """;
 
     [Theory]
-    [InlineData(Sample, 00000)]
-    //[InlineData(<INPUT>, 00000)]
+    [InlineData(Sample, 374)]
+    //[InlineData(<INPUT>, 9623138)]
     public void Test_Part1_Sample(string input, long expected)
     {
         // Arrange

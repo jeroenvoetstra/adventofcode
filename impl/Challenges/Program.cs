@@ -7,7 +7,6 @@ if (args.Length > 0 && args[0] == "all")
 }
 else
 {
-    ExecuteChallenge<Challenges.Day11.Part1>();
     ExecuteChallenge<Challenges.Day11.Part2>();
 }
 return;
