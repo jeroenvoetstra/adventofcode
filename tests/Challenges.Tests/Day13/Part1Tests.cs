@@ -24,7 +24,7 @@ public class Part1Tests
 
     [Theory]
     [InlineData(Sample, 405)]
-    //[InlineData(<INPUT>, 0)]
+    //[InlineData(<INPUT>, 31265)]
     public void Test_Part1_Sample(string input, long expected)
     {
         // Arrange
