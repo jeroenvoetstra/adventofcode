@@ -3,7 +3,9 @@
 namespace Challenges.Day13;
 
 /// <summary>
-/// 
+/// Main topic: comparing strings while simultaneously moving forward as well backtrack.
+/// I chose to compare integers instead by constructing a binary string from the input,
+/// replacing # with 1 and . with 0.
 /// </summary>
 public class Part1() : AdventOfCodeChallenge(13, 1, @"Day13\input.txt")
 {

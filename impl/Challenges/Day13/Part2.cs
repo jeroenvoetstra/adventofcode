@@ -3,7 +3,9 @@
 namespace Challenges.Day13;
 
 /// <summary>
-/// 
+/// Main topic: hamming distance (https://en.wikipedia.org/wiki/Hamming_distance). The integers
+/// from part 1 weren't really useful anymore (although I was really close in solving it by checking
+/// if 2 integers had exactly 1 different bit, but ultimately it did not work).
 /// </summary>
 public class Part2() : AdventOfCodeChallenge(13, 2, @"Day13\input.txt")
 {
@@ -44,7 +46,7 @@ public class Part2() : AdventOfCodeChallenge(13, 2, @"Day13\input.txt")
                 continue;
 
             // Not very efficient but I spent way too much time on this... We need at least 1 line with hamming distance 1 when
-            // backtracking. The rest of the lines need to match in order for the smudge clearing to work
+            // backtracking. The rest of the lines need to match in order for the smudge-clearing to work
             var has1HammingDistance1 = Enumerable.Range(0, Math.Min(i, input.Count - i))
                 .Count((j) => HammingDistance(input[i + j], input[i - j - 1]) == 1) == 1;
             var allEqualOrWithHammingDistance1 = Enumerable.Range(0, Math.Min(i, input.Count - i))
