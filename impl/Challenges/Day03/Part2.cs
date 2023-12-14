@@ -39,6 +39,6 @@ public class Part2() : AdventOfCodeChallenge(3, 2, @"Day03\input.txt")
             }
         }
 
-        return symbols.Where((symbol) => symbol.IsGear && symbol.AttachedNumbers.Count == 2).Sum((symbol) => symbol.AttachedNumbers[0].Value * symbol.AttachedNumbers[1].Value);
+        return symbols.Where((symbol) => symbol is { IsGear: true, AttachedNumbers.Count: 2 }).Sum((symbol) => symbol.AttachedNumbers[0].Value * symbol.AttachedNumbers[1].Value);
     }
 }
